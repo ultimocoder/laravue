@@ -522,7 +522,8 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{route('category')}}" key="t-products">Add Category</a></li>
                                     <li><a href="{{route('show.category')}}" key="t-products">Show Category</a></li>
-                                    <li><a href="ecommerce-products.html" key="t-products">Sub Category</a></li>
+                                    <li><a href="{{route('sub.category')}}" key="t-products">Add Sub Category</a></li>
+                                    <li><a href="{{route('show.sub.category')}}" key="t-products">Show Sub Category</a></li>
                                     <li><a href="ecommerce-products.html" key="t-products">Products</a></li>
                                     <li><a href="ecommerce-product-detail.html" key="t-product-detail">Product Detail</a></li>
                                     <li><a href="ecommerce-orders.html" key="t-orders">Orders</a></li>
@@ -932,6 +933,7 @@
 
         <!-- App js -->
         <script src="{{asset('assets/js/app.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 
 </html>

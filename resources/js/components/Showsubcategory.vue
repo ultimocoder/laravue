@@ -27,6 +27,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Category Name</th>
                         <th>Slug</th>
                         <th>Description</th>
                         <th>Created At</th>
@@ -37,9 +38,10 @@
 
                     <tbody>
                         <tr v-for="(value,index) in categories" :key="index">
+                            <td>{{ value.sub_cat_name }}</td>
                             <td>{{ value.cat_name }}</td>
-                            <td>{{ value.cat_sulg }}</td>
-                            <td>{{ value.cat_des }}</td>
+                            <td>{{ value.sub_cat_slug }}</td>
+                            <td>{{ value.sub_cat_des }}</td>
                             <td>61</td>
                             <td>
                                 <a @click.prevent="edit(value.id)" type="button" class="btn btn-primary" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit" title="Edit"></i></a> 
@@ -56,7 +58,7 @@
 
 </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -72,12 +74,17 @@
                         <form>
                             <div class="card-body">
                                 <div>
+                                    <label class="mb-1">Sub Category Name</label>
+                                    <input type="hidden" class="form-control" maxlength="25" v-model="edit_categories_id" id="defaultconfig">
+                                    <input type="text" class="form-control" maxlength="25" v-model="edit_categories_name" id="defaultconfig">
+                                </div>
+                                <div>
                                     <label class="mb-1">Category Name</label>
                                     <input type="hidden" class="form-control" maxlength="25" v-model="edit_categories_id" id="defaultconfig">
                                     <input type="text" class="form-control" maxlength="25" v-model="edit_categories_name" id="defaultconfig">
                                 </div>
                                 <div class="mt-3">
-                                    <label class="mb-1">Category Description</label>
+                                    <label class="mb-1">Sub Category Description</label>
                                     <textarea id="textarea" class="form-control" maxlength="225" rows="3" v-model="edit_categories_des"></textarea>
                                 </div>
                                 <div class="mt-3">
@@ -117,7 +124,7 @@
        methods : {
         onload(){ 
             let currentObj = this;
-            axios.get('/return-category')
+            axios.get('/return-sub-category')
             .then(function (response) {  
                currentObj.categories = response.data;
             });
@@ -126,9 +133,9 @@
         // edit category 
         edit(id){
             let currentObjedit = this;
-            axios.get('edit-return-category/'+id)
+            axios.get('edit-return-sub-category/'+id)
             .then(function (response) {  
-                currentObjedit.edit_categories_id = response.data.id;
+                currentObjedit.edit_sub_categories_id = response.data.id;
                 currentObjedit.edit_categories_name = response.data.cat_name;
                 currentObjedit.edit_categories_des = response.data.cat_des;
                 currentObjedit.output = '';
@@ -149,7 +156,7 @@
         },() => {
         }).then((result) => {
             if (result.value) {
-                axios.get('category-delete/'+id)
+                axios.get('sub-category-delete/'+id)
                 .then(response => {
                 currentObjj.categories = response.data;
                 this.onload();
