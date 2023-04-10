@@ -2,7 +2,7 @@
 @section('title','Dashboard')
 @section('content') 
 <div id="app">
-    <showcategory/>
+    <product/>
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
 @endsection

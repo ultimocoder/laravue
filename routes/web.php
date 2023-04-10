@@ -31,5 +31,10 @@ Route::get('return-sub-category', [App\Http\Controllers\CategoryController::clas
 Route::get('category-delete/{id}', [App\Http\Controllers\CategoryController::class, 'category_delete']);  
 Route::get('sub-category-delete/{id}', [App\Http\Controllers\CategoryController::class, 'sub_category_delete']);  
 Route::get('edit-return-category/{id}', [App\Http\Controllers\CategoryController::class, 'category_edit']);  
-Route::get('edit-return-sub-category/{id}', [App\Http\Controllers\CategoryController::class, 'sub_category_edit']);  
+Route::get('edit-return-sub-category/{id}', [App\Http\Controllers\CategoryController::class, 'sub_category_edit']);    
 Route::post('category-update', [App\Http\Controllers\CategoryController::class, 'category_update']);  
+Route::post('sub-category-update', [App\Http\Controllers\CategoryController::class, 'sub_category_update']);  
+// Product
+Route::get('product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');  
+Route::post('product-save', [App\Http\Controllers\ProductController::class, 'product_save']);  
+Route::get('product-return-sub-category/{id}', [App\Http\Controllers\ProductController::class, 'pro_category_edit']);

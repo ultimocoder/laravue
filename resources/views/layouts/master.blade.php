@@ -524,7 +524,7 @@
                                     <li><a href="{{route('show.category')}}" key="t-products">Show Category</a></li>
                                     <li><a href="{{route('sub.category')}}" key="t-products">Add Sub Category</a></li>
                                     <li><a href="{{route('show.sub.category')}}" key="t-products">Show Sub Category</a></li>
-                                    <li><a href="ecommerce-products.html" key="t-products">Products</a></li>
+                                    <li><a href="{{route('product')}}" key="t-products">Add Products</a></li>
                                     <li><a href="ecommerce-product-detail.html" key="t-product-detail">Product Detail</a></li>
                                     <li><a href="ecommerce-orders.html" key="t-orders">Orders</a></li>
                                     <li><a href="ecommerce-customers.html" key="t-customers">Customers</a></li>

@@ -8,6 +8,7 @@ window.Swal = swal;
     import Showcategory from './components/Showcategory.vue';
     import Showsubcategory from './components/Showsubcategory.vue';
     import Subcategory from './components/Subcategory.vue';
+    import Product from './components/Product.vue';
 
 window.$ = window.jQuery = require('jQuery');
 
@@ -18,4 +19,5 @@ app.component('category' , Category);
 app.component('showcategory' , Showcategory);
 app.component('showsubcategory' , Showsubcategory);
 app.component('subcategory' , Subcategory);
+app.component('product' , Product);
 app.mount("#app")

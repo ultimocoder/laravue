@@ -67,12 +67,19 @@ class CategoryController extends Controller
         return response()->json($category);
     }
     public function sub_category_edit($id){
-        $category = \DB::table('subcategories')->select('categories.cat_name','categories.id','subcategories.id','subcategories.sub_cat_name','subcategories.sub_cat_slug', 'subcategories.sub_cat_des', 'subcategories.updated_at', 'subcategories.created_at')->leftJoin('categories', 'subcategories.cat_id', '=', 'categories.id')->get();
+        $sub_cat = \DB::table('subcategories')->select('categories.id as cat_id','categories.cat_name','categories.id','subcategories.id','subcategories.sub_cat_name','subcategories.sub_cat_slug', 'subcategories.sub_cat_des', 'subcategories.updated_at', 'subcategories.created_at')->leftJoin('categories', 'subcategories.cat_id', '=', 'categories.id')->where('subcategories.id',$id)->get();
+        $cat_list = Category::get();
+        $category = ['sub_cat' => $sub_cat, 'cat_list' => $cat_list]; 
         return response()->json($category);
     }
     public function category_update(Request $request){
         Category::where('id', $request->id)->update(['cat_name' => $request->cat_name, 'cat_des' => $request->cat_des]);
         $edit_output = 'Category Update Successfully';
+        return response()->json($edit_output);
+    }
+    public function sub_category_update(Request $request){
+        Subcategory::where('id', $request->id)->update(['sub_cat_name' => $request->sub_cat_name, 'sub_cat_des' => $request->sub_cat_des, 'cat_id' => $request->cat_id]);
+        $edit_output = 'Sub Category Update Successfully';
         return response()->json($edit_output);
     }
     public function sub_cat_index(){

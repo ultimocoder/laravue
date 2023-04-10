@@ -37,7 +37,7 @@
 
 
                     <tbody>
-                        <tr v-for="(value,index) in categories" :key="index">
+                        <tr v-for="(value,index) in categories2" :key="index">
                             <td>{{ value.sub_cat_name }}</td>
                             <td>{{ value.cat_name }}</td>
                             <td>{{ value.sub_cat_slug }}</td>
@@ -75,20 +75,22 @@
                             <div class="card-body">
                                 <div>
                                     <label class="mb-1">Sub Category Name</label>
-                                    <input type="hidden" class="form-control" maxlength="25" v-model="edit_categories_id" id="defaultconfig">
-                                    <input type="text" class="form-control" maxlength="25" v-model="edit_categories_name" id="defaultconfig">
+                                    <input type="text" class="form-control" maxlength="25" v-model="sub_cat_name" id="defaultconfig">
                                 </div>
                                 <div>
                                     <label class="mb-1">Category Name</label>
                                     <input type="hidden" class="form-control" maxlength="25" v-model="edit_categories_id" id="defaultconfig">
-                                    <input type="text" class="form-control" maxlength="25" v-model="edit_categories_name" id="defaultconfig">
+                                    <select v-model="cat_id" class="form-control">
+                                        <option selected>Choose Category</option>
+                                        <option v-for="categories in categories" v-bind:value="categories.id" :selected="categories.id === cat_id" >{{ categories.cat_name }}</option>
+                                    </select>
                                 </div>
                                 <div class="mt-3">
                                     <label class="mb-1">Sub Category Description</label>
-                                    <textarea id="textarea" class="form-control" maxlength="225" rows="3" v-model="edit_categories_des"></textarea>
+                                    <textarea id="textarea" class="form-control" maxlength="225" rows="3" v-model="sub_cat_des"></textarea>
                                 </div>
                                 <div class="mt-3">
-                                    <button class="btn btn-primary btn-sm" data-dismiss="modal" @click.prevent="formSubmit(edit_categories_id)">Submit</button>
+                                    <button class="btn btn-primary btn-sm" data-dismiss="modal" @click.prevent="formSubmit(sub_cat_id)">Submit</button>
                                 </div>
                                 <div class="mt-3">
                                     <span class="mb-1">{{output}}</span>
@@ -112,8 +114,11 @@
        data(){
          return {
             categories : '',
-            edit_categories_name:'',
-            edit_categories_des:'',
+            categories2 : '',
+            sub_cat_id:'',
+            sub_cat_name:'',
+            sub_cat_des:'',
+            cat_id:'',
             output:'',
          }
        },
@@ -126,7 +131,7 @@
             let currentObj = this;
             axios.get('/return-sub-category')
             .then(function (response) {  
-               currentObj.categories = response.data;
+               currentObj.categories2 = response.data;
             });
 
         },
@@ -134,10 +139,12 @@
         edit(id){
             let currentObjedit = this;
             axios.get('edit-return-sub-category/'+id)
-            .then(function (response) {  
-                currentObjedit.edit_sub_categories_id = response.data.id;
-                currentObjedit.edit_categories_name = response.data.cat_name;
-                currentObjedit.edit_categories_des = response.data.cat_des;
+            .then(function (response) {
+                currentObjedit.sub_cat_id = response.data.sub_cat[0].id;
+                currentObjedit.cat_id = response.data.sub_cat[0].cat_id;
+                currentObjedit.sub_cat_name = response.data.sub_cat[0].sub_cat_name;
+                currentObjedit.sub_cat_des = response.data.sub_cat[0].sub_cat_des;
+                currentObjedit.categories = response.data.cat_list;
                 currentObjedit.output = '';
             });
             // EventBus.$emit('update-category',id);
@@ -166,10 +173,11 @@
        },
         formSubmit(id) {
                 let currentObj = this;  
-                axios.post('/category-update', { 
+                axios.post('/sub-category-update', { 
                     id:id,
-                    cat_name: this.edit_categories_name,  
-                    cat_des: this.edit_categories_des
+                    sub_cat_name: this.sub_cat_name,  
+                    cat_id: this.cat_id,
+                    sub_cat_des: this.sub_cat_des
                 })  
                 .then(response => {  
                     currentObj.output = response.data;
